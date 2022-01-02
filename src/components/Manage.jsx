@@ -1,22 +1,59 @@
-import React, { useState } from 'react'
-
+import React, { useState, useEffect } from 'react'
+import { updateCar, addCar } from '../api/car'
 export default function Manage({
   bookingsArray,
-  assetName,
-  assetModel,
-  assetLocation,
+  manageData,
   assetImages = [{ src: 'szczur.png' }],
   setManageViewOpen,
 }) {
-  const [nameInput, setNameInput] = useState(assetName)
-  const [modelInput, setModelInput] = useState(assetModel)
-  const [locationInput, setLocationInput] = useState(assetLocation)
+  const [nameInput, setNameInput] = useState(manageData.name)
+  const [modelInput, setModelInput] = useState(manageData.model)
+  const [locationInput, setLocationInput] = useState(manageData.location)
   const [activeImageSrc, setActiveImageSrc] = useState(assetImages[0].src)
+  const [editMode, setEditMode] = useState(false)
+
+  useEffect(() => {
+    if (manageData?.name) {
+      setEditMode(true)
+    } else {
+      setEditMode(false)
+    }
+  }, [])
+
   const handleDelete = () => {
     // TODO Delete Api Call
   }
-  const submitForm = () => {
-    //TODO Add/update api call
+  const submitForm = async () => {
+    let data
+    if (editMode) {
+      //TODO Add image posting
+      data = {
+        carId: manageData.id,
+        carName: nameInput,
+        carModel: modelInput,
+        description: 'todo',
+        price: 420,
+        location: locationInput,
+      }
+      try {
+        await updateCar(data)
+      } catch (error) {
+        console.log(error)
+      }
+    } else {
+      data = {
+        carName: nameInput,
+        carModel: modelInput,
+        description: 'todo',
+        price: 420,
+        location: locationInput,
+      }
+      try {
+        await addCar(data)
+      } catch (error) {
+        console.log(error)
+      }
+    }
     setManageViewOpen(false)
   }
   return (

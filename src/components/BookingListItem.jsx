@@ -9,6 +9,9 @@ export default function BookingListItem({
   model,
   location,
 }) {
+  const handleBookingManage = () => {
+    console.log('yes yes szur kill human things')
+  }
   return (
     <tr>
       <td>{id}</td>
@@ -19,7 +22,14 @@ export default function BookingListItem({
       <td>{model}</td>
       <td>{location}</td>
       <td>
-        <button>Manage</button>
+        <button
+          className="btn"
+          onClick={() => {
+            handleBookingManage()
+          }}
+        >
+          Manage
+        </button>
       </td>
     </tr>
   )

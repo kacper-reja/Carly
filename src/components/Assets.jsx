@@ -1,6 +1,6 @@
 import React from 'react'
 import { AssetListItem } from '.'
-export default function Assets({ active, setManageViewOpen }) {
+export default function Assets({ active, setManageViewOpen, setManageData }) {
   // TODO
   // Fetch assets from API
   const assetsFromApi = ''
@@ -19,14 +19,21 @@ export default function Assets({ active, setManageViewOpen }) {
     },
   ]
   const assets = assetsFromApi || placeholder
-  const assetsToRender = assets.map((asset) => (
+  const assetsToRender = assets.map((asset, index) => (
     <AssetListItem
+      key={index}
       id={asset.id}
       name={asset.name}
       model={asset.model}
       location={asset.location}
+      setManageData={setManageData}
+      setManageViewOpen={setManageViewOpen}
     />
   ))
+  const handleAddNewAsset = () => {
+    setManageData({})
+    setManageViewOpen(true)
+  }
   return (
     <>
       <div id="assets-page" className={`tab-pane ${active ? 'active' : ''}`}>
@@ -45,7 +52,7 @@ export default function Assets({ active, setManageViewOpen }) {
           <div className="col text-end mb-2">
             <button
               className="btn btn-primary"
-              onclick={() => setManageViewOpen(true)}
+              onClick={() => handleAddNewAsset()}
             >
               Add
             </button>

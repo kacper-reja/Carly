@@ -23,8 +23,9 @@ export default function Bookings({ active }) {
   ]
   const bookingsFromApi = ''
   const bookings = bookingsFromApi || placeholder
-  const bookingsToRender = bookings.map((booking) => (
+  const bookingsToRender = bookings.map((booking, index) => (
     <BookingListItem
+      key={index}
       id={booking.id}
       firstName={booking.firstName}
       lastName={booking.lastName}

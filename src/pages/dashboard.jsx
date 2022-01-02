@@ -8,7 +8,7 @@ function Dashboard() {
   return (
     <>
       {manageViewOpen ? (
-        <Manage setManageViewOpen={setManageViewOpen} />
+        <Manage setManageViewOpen={setManageViewOpen} manageData={manageData} />
       ) : (
         <div className="container my-3 my-md-4">
           <ul className="nav nav-tabs">
@@ -42,6 +42,7 @@ function Dashboard() {
               <Assets
                 active={currentTab === 'assets'}
                 setManageViewOpen={setManageViewOpen}
+                setManageData={setManageData}
               />
             ) : (
               <Bookings active={currentTab === 'bookings'} />
