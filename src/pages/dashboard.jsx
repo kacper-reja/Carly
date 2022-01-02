@@ -1,19 +1,55 @@
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs'
-
+import { Bookings, Assets, Manage } from '../components/'
+import { useState } from 'react'
 function Dashboard() {
+  const [currentTab, setCurrentTab] = useState('assets')
+  const [manageViewOpen, setManageViewOpen] = useState(false)
+  const [manageData, setManageData] = useState({})
   return (
-    <div>
-      <Tabs>
-        <TabList>
-          <Tab>Assets</Tab>
-          <Tab>Bookings</Tab>
-        </TabList>
-        <input type="text" placeholder="search" />
-        <button>Add</button>
-        <TabPanel>Assets</TabPanel>
-        <TabPanel>Bookings</TabPanel>
-      </Tabs>
-    </div>
+    <>
+      {manageViewOpen ? (
+        <Manage setManageViewOpen={setManageViewOpen} />
+      ) : (
+        <div className="container my-3 my-md-4">
+          <ul className="nav nav-tabs">
+            <li className="nav-item">
+              <button
+                className={`nav-link ${
+                  currentTab === 'assets?' ? 'active' : ''
+                }`}
+                data-bs-toggle="tab"
+                data-bs-target="#assets-page"
+                onClick={() => setCurrentTab('assets')}
+              >
+                Assets
+              </button>
+            </li>
+            <li className="nav-item">
+              <button
+                className={`nav-link ${
+                  currentTab === 'bookings?' ? 'active' : ''
+                }`}
+                data-bs-toggle="tab"
+                data-bs-target="#bookings-page"
+                onClick={() => setCurrentTab('bookings')}
+              >
+                Bookings
+              </button>
+            </li>
+          </ul>
+          <div className="tab-content" id="myTabContent">
+            {currentTab === 'assets' ? (
+              <Assets
+                active={currentTab === 'assets'}
+                setManageViewOpen={setManageViewOpen}
+              />
+            ) : (
+              <Bookings active={currentTab === 'bookings'} />
+            )}
+          </div>
+        </div>
+      )}
+    </>
   )
 }
 
