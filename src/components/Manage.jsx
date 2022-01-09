@@ -3,6 +3,7 @@ import { updateCar, addCar } from '../api/car'
 import { addImage, getImage } from '../api/image'
 import moment from 'moment'
 import { cancelBooking } from '../api/booking'
+import { toast } from 'react-toastify'
 export default function Manage({
   bookingsArray,
   manageData,
@@ -75,7 +76,15 @@ export default function Manage({
       const response = await addImage(imagesArray)
       setImagesIdArray(response.data.map((item) => item.fileId))
     } catch (err) {
-      console.log(err)
+      toast.error('Add image failed', {
+        position: 'top-left',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      })
     }
   }
   const handleCancel = async (order) => {
@@ -116,7 +125,15 @@ export default function Manage({
       try {
         await updateCar(data)
       } catch (error) {
-        console.log(error)
+        toast.error('Update car failed', {
+          position: 'top-left',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        })
       }
     } else {
       data = {
@@ -138,7 +155,15 @@ export default function Manage({
       try {
         await addCar(data)
       } catch (error) {
-        console.log(error)
+        toast.error('Add car failed', {
+          position: 'top-left',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        })
       }
     }
   }

@@ -1,6 +1,6 @@
 import React from 'react'
-import {cancelBooking} from "../api/booking";
-import {toast} from "react-toastify";
+import { cancelBooking } from '../api/booking'
+import { toast } from 'react-toastify'
 export default function BookingListItem({
   id,
   firstName,
@@ -9,33 +9,29 @@ export default function BookingListItem({
   name,
   model,
   location,
-    carId,
-    booklyId
+  carId,
+  booklyId,
 }) {
   const handleBookingManage = async () => {
-
-          let data = {
-              carId:carId ,
-              status: 2,
-              orderId:id,
-              booklyId ,
-          }
-      try{
-          await cancelBooking(data)
-          toast.error('Booking cancel failed', {
-              position: 'top-left',
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-          })
-      }
-      catch(err){
-console.log(err)
-      }
-
+    let data = {
+      carId: carId,
+      status: 2,
+      orderId: id,
+      booklyId,
+    }
+    try {
+      await cancelBooking(data)
+    } catch (err) {
+      toast.error('Cancel booking failed', {
+        position: 'top-left',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      })
+    }
   }
   return (
     <tr>
