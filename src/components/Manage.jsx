@@ -49,24 +49,24 @@ export default function Manage({
     manageData?.description && setDescInput(manageData.description)
     if (manageData?.carName) {
       setEditMode(true)
+      manageData.images.forEach(async (image, index) => {
+        'use strict'
+        const response = await getImage(image)
+        fetch('data:image/png;base64,' + response)
+          .then((res) => {
+            return res.blob()
+          })
+          .then((blob) =>
+            setImagesArray([
+              ...imagesArray,
+              new File([blob], `image-${index}.png`, { type: 'image/png' }),
+            ])
+          )
+        console.log(imagesArray)
+      })
     } else {
       setEditMode(false)
     }
-    manageData.images.forEach(async (image, index) => {
-      'use strict'
-      const response = await getImage(image)
-      fetch('data:image/png;base64,' + response)
-        .then((res) => {
-          return res.blob()
-        })
-        .then((blob) =>
-          setImagesArray([
-            ...imagesArray,
-            new File([blob], `image-${index}.png`, { type: 'image/png' }),
-          ])
-        )
-      console.log(imagesArray)
-    })
   }, [])
   useEffect(() => {
     console.log(descInput)
