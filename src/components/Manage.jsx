@@ -141,6 +141,17 @@ export default function Manage({
       }
       try {
         await updateCar(data)
+        {
+          toast.success('Update car successful', {
+            position: 'top-left',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          })
+        }
       } catch (error) {
         toast.error('Update car failed', {
           position: 'top-left',
@@ -171,6 +182,17 @@ export default function Manage({
       console.log(data)
       try {
         await addCar(data)
+        {
+          toast.success('Add car successful', {
+            position: 'top-left',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          })
+        }
       } catch (error) {
         toast.error('Add car failed', {
           position: 'top-left',
