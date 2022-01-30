@@ -117,6 +117,7 @@ export default function Manage({
   }, [])
 
   const submitForm = async (e) => {
+    console.log(manageData)
     console.log('editMode')
     console.log(editMode)
     e.preventDefault()
@@ -136,13 +137,13 @@ export default function Manage({
         return 0
       }
       data = {
-        id:manageData.id,
+        carId:manageData.id,
         carName: nameInput,
         carModel: modelInput,
         description: descInput,
         price: Number(priceInput),
         location: locationInput,
-        images: imagesIdArray===0?[]:imagesIdArray,
+        images: imagesIdArray.length===0?[]:manageData.images,
         startDateTime: moment(startDateInput),
         endDateTime: moment(endDateInput),
         active: activeInput,
@@ -150,6 +151,8 @@ export default function Manage({
         updateTime: null,
         orders: manageData.orders,
       }
+      console.log('data')
+      console.log(data)
       try {
         await updateCar(data)
         
