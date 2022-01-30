@@ -149,7 +149,7 @@ export default function Manage({
         active: activeInput,
         createTime: null,
         updateTime: null,
-        orders: manageData.orders,
+        orders: [],
       }
       console.log('data')
       console.log(data)
