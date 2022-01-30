@@ -22,7 +22,18 @@ export default function Manage({
   const [descInput, setDescInput] = useState(manageData.description)
   const [priceInput, setPriceInput] = useState(manageData.price )
   const [filteredOrders, setFilteredOrders] = useState([])
+  const handleDelete = (image) =>{
+imagesArray.forEach((i,index)=>{if(image.name===i.name){
+      setImagesIdArray(imagesIdArray.filter((id,idIndex)=>idIndex!==index)) 
+    }})
+      setImagesArray(
+        imagesArray.filter((i) => image.name !== i.name)
+      )
+  }
 
+  useEffect(()=>{
+console.log(imagesIdArray)
+  },[imagesIdArray])
   const handleSearch = (e) => {
     if (e.target.value === '') {
       setFilteredOrders(manageData.orders)
@@ -47,6 +58,7 @@ export default function Manage({
       setEditMode(true)
       setStartDateInput(manageData.startDateTime)
       setEndDateInput(manageData.endDateTime)
+      setImagesIdArray(manageData.images)
       manageData.images.forEach(async (image, index) => {
         'use strict'
         const response = await getImage(image)
@@ -143,7 +155,7 @@ export default function Manage({
         description: descInput,
         price: Number(priceInput),
         location: locationInput,
-        images: imagesIdArray.length===0?[]:manageData.images,
+        images: imagesIdArray.length===0?[]:imagesIdArray,
         startDateTime: moment(startDateInput),
         endDateTime: moment(endDateInput),
         active: activeInput,
@@ -264,9 +276,7 @@ export default function Manage({
                         <button
                           className="btn"
                           onClick={() =>
-                            setImagesArray(
-                              imagesArray.filter((i) => image.name !== i.name)
-                            )
+                          handleDelete(image)
                           }
                         >
                           x
