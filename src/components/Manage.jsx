@@ -18,22 +18,11 @@ export default function Manage({
   const [imagesIdArray, setImagesIdArray] = useState(manageData.images | [])
   const [startDateInput, setStartDateInput] = useState(new Date())
   const [endDateInput, setEndDateInput] = useState(new Date())
-  const [activeInput, setActiveInput] = useState(manageData.active )
+  const [activeInput, setActiveInput] = useState(manageData.active)
   const [descInput, setDescInput] = useState(manageData.description)
-  const [priceInput, setPriceInput] = useState(manageData.price )
+  const [priceInput, setPriceInput] = useState(manageData.price)
   const [filteredOrders, setFilteredOrders] = useState([])
-  const handleDelete = (image) =>{
-imagesArray.forEach((i,index)=>{if(image.name===i.name){
-      setImagesIdArray(imagesIdArray.filter((id,idIndex)=>idIndex!==index)) 
-    }})
-      setImagesArray(
-        imagesArray.filter((i) => image.name !== i.name)
-      )
-  }
 
-  useEffect(()=>{
-console.log(imagesIdArray)
-  },[imagesIdArray])
   const handleSearch = (e) => {
     if (e.target.value === '') {
       setFilteredOrders(manageData.orders)
@@ -58,7 +47,6 @@ console.log(imagesIdArray)
       setEditMode(true)
       setStartDateInput(manageData.startDateTime)
       setEndDateInput(manageData.endDateTime)
-      setImagesIdArray(manageData.images)
       manageData.images.forEach(async (image, index) => {
         'use strict'
         const response = await getImage(image)
@@ -105,10 +93,9 @@ console.log(imagesIdArray)
       orderId: order.orderId,
       booklyId: order.booklyId,
     }
-    try{
-    await cancelBooking(data)
-    }
-    catch(err){
+    try {
+      await cancelBooking(data)
+    } catch (err) {
       console.log(err)
       toast.error('Cancel failed', {
         position: 'top-left',
@@ -149,13 +136,13 @@ console.log(imagesIdArray)
         return 0
       }
       data = {
-        carId:manageData.id,
+        carId: manageData.id,
         carName: nameInput,
         carModel: modelInput,
         description: descInput,
         price: Number(priceInput),
         location: locationInput,
-        images: imagesIdArray.length===0?[]:imagesIdArray,
+        images: imagesIdArray.length === 0 ? [] : manageData.images,
         startDateTime: moment(startDateInput),
         endDateTime: moment(endDateInput),
         active: activeInput,
@@ -167,16 +154,16 @@ console.log(imagesIdArray)
       console.log(data)
       try {
         await updateCar(data)
-        
-          toast.success('Update car successful', {
-            position: 'top-left',
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          })
+
+        toast.success('Update car successful', {
+          position: 'top-left',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        })
       } catch (error) {
         toast.error('Update car failed', {
           position: 'top-left',
@@ -196,7 +183,7 @@ console.log(imagesIdArray)
         description: descInput,
         price: Number(priceInput),
         location: locationInput,
-        images: imagesIdArray===0?[]:imagesIdArray,
+        images: imagesIdArray === 0 ? [] : imagesIdArray,
         startDateTime: moment(startDateInput),
         endDateTime: moment(endDateInput),
         active: activeInput,
@@ -276,7 +263,9 @@ console.log(imagesIdArray)
                         <button
                           className="btn"
                           onClick={() =>
-                          handleDelete(image)
+                            setImagesArray(
+                              imagesArray.filter((i) => image.name !== i.name)
+                            )
                           }
                         >
                           x
@@ -421,7 +410,7 @@ console.log(imagesIdArray)
             </form>
           </div>
         </div>
-        {manageData?.orders &&manageData.orders.length !==0 ? (
+        {manageData?.orders && manageData.orders.length !== 0 ? (
           <div className="row">
             <div className="col-md-6 col-lg-4 mb-2">
               <div className="input-group">
@@ -465,12 +454,16 @@ console.log(imagesIdArray)
                     <td>{item.lastName}</td>
                     <td>{moment(item.startDate).format('DD-MM-YYYY')}</td>
                     <td>
-                      <button
-                        className="btn btn-primary"
-                        onClick={() => handleCancel(item)}
-                      >
-                        Cancel
-                      </button>
+                      {item.status == 1 ? (
+                        <button
+                          className="btn btn-primary"
+                          onClick={() => handleCancel(item)}
+                        >
+                          Cancel
+                        </button>
+                      ) : (
+                        <p className="p">Cancelled</p>
+                      )}
                     </td>
                   </tr>
                 ))}
