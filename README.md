@@ -1,3 +1,27 @@
+# Carly
+
+Car booking application created with React as a semester project for Programming Multilayered and Mobile Apps Based on React.
+
+# Technologies
+
+Project is created with the use of the following libraries:
+
+- node.js version: 14.17.3
+- axios version: 0.24.0
+- buffer version: 6.0.3
+- crypto-js version: 4.1.1
+- moment version: 2.29.1
+- node-sass version: 7.0.1
+- react version: 17.0.2
+- react-dom version: 17.0.2
+
+# Description
+
+The goal of this project was to create a service that handles car bookings:
+
+- website for Carly administrator
+- REST Api that could be used by another service so that their users could make bookings of our cars
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
